@@ -1,0 +1,19 @@
+%Cyc
+
+clc;
+clear all;
+close all;
+n = 7
+k = 4
+if k >= n
+error('Message length (k) must be less than codeword length (n).');
+end
+xn_minus_1 = [1 zeros(1, n-1) 1];
+factors = gfprimfd(n-k, 'all', 2);
+if isempty(factors)
+error('No generator polynomial found for the given (n, k).');
+end
+g = factors(1, :)
+msg=[1 0 0 1]
+code = encode(msg,n,k,'hamming/binary',g)
+msg1 = decode(code,n,k,'hamming/binary',g)
